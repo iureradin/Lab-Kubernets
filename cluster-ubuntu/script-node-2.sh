@@ -1,8 +1,11 @@
 #!/bin/bash
 
+setenforce 0
+sed -i "s/^SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
 hostnamectl set-hostname cka-node-2
 systemctl disable --now ufw
 swapoff -a
+sed -i 's/.*swap.*/#&/' /etc/fstab
 
 cat > /etc/modules-load.d/k8s.conf <<EOF
 br_netfilter
